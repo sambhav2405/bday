@@ -212,6 +212,26 @@
          function handleAppCommands(transcript) {
             const command = transcript.toLowerCase();
             const useHindi = (currentLanguage === 'hi-IN');
+            const apps = {
+                'youtube': 'https://www.youtube.com',
+                'whatsapp': 'https://web.whatsapp.com',
+                'google': 'https://www.google.com',
+                'github': 'https://www.github.com',
+                'instagram': 'https://www.instagram.com'
+            };
+
+            for (const appName in apps) {
+                if (command.includes(`open ${appName}`) || command.includes(`${appName} खोलो`)) {
+                    const url = apps[appName];
+                    const response = `Of course, Mr. Jain. Opening ${appName}.`;
+                    const responseHi = `ज़रूर, Mr. Jain. आपके लिए ${appName} खोल रहा हूँ।`;
+                    const finalResponse = isHindi(command) ? responseHi : response;
+                    logToConversation("J.A.S.I", finalResponse);
+                    speak(finalResponse);
+                    window.open(url, '_blank');
+                    return true;
+                }
+            }
 
             if (command.includes("show a princess") || command.includes("show me princess") || command.includes("aditi ki photo") || command.includes("राजकुमारी दिखाओ")||  command.includes("beautiful girl in  whole world") ) {
                 const response = "Of course, sir. Displaying the images of the princess for you.";
